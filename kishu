@@ -1,0 +1,97 @@
+employee = {101: {'name': 'Satya',
+                  'age': 27,
+                  'department': 'HR',
+                  'salary': 50000}}
+def main_menu():
+    while True:
+        print("employee management system")
+        print("1. Add employee")
+        print("2. View All employee")
+        print("3. Search for employee")
+        print("4. Exit")
+        choice = input("enter your choice(1,4):")
+        if choice == '1':
+            add_employee()
+        elif choice == '2':
+            view_employee()
+        elif choice == '3':
+            search_employee()
+        elif choice == '4' :
+            print("\nthank you for using the employee management system.goodbye")
+            break
+        else:
+            print("invalid input.\nplease consider making choice betweem give option \ndon't try to become oversmart.")
+def add_employee():
+    print("add new employee")
+    while True:
+        try:
+            emp_id = int(input("enter employee id: "))
+            if emp_id in employee:
+                print("employee id already exists.\nplease enter a unique id.")
+                continue
+            break
+        except ValueError as  e:
+             print(e)
+    name = input("enter employee name: ").strip()
+    while not name:
+        print("plese enter the name.don't try to fool the system with blank space.")
+        name = input("enter employee name: ").strip()
+    while True:
+        try:
+            age = int(input("enter employee age; "))
+            if age< 18 or age > 100:
+                print("either you are underage or your are at the age you should rest at your house")
+                continue
+            break
+        except ValueError as e:
+            print(e)
+
+    department = input("enter Department: ").strip()
+    while not department:
+        print("it can't be left empty. please fill your relavent department.")
+        department = input("enter department: ").strip()
+    while True:
+        try:
+            salary = int(input("enter emplouyee salary: "))
+            if salary < 0:
+                print("please enter a valid salary.you can't be working for free.")
+                continue
+            break
+        except ValueError as e:
+            print(e)
+        # storing the employee data in the dictionary
+        employee[emp_id] = {'name': name,
+                            'age': age,
+                            'department': department,
+                            'salary': salary}   
+        print(f"employee {name} added successfully with id {emp_id}.")
+
+def view_employee():
+    print("view all employees")
+    if not employee:
+        print("no employee found.")
+        return
+    print(f"{'ID':<6} {'Name':<20} {'Age':<6} {'Department':<15} {'Salary':<10}")
+    print("-" * 57)
+
+    for emp_id, details in employee.items():
+        print(f"{emp_id:<6} {details['name']:<20} {details['age']:<6} {details['department']:<15} {details['salary']:<10.2f}")
+def search_employee():
+    print("search employee")
+    try:
+        emp_id = int(input("enter employee id to search"))
+        if emp_id in employee:
+            details = employee[emp_id]
+            print("\nEmployee Found:")
+            print(f"ID: {emp_id}")
+            print(f"Name: {details['name']}")
+            print(f"Age: {details['age']}")
+            print(f"Department: {details['department']}")
+            print(f"Salary: {details['salary']:.2f}")
+        else:
+            print("\nEmployee not found.")
+    except ValueError as e:
+        print(e)
+
+if __name__ =="__main__":
+    main_menu()
